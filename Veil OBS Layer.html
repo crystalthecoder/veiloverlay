@@ -1,0 +1,334 @@
+
+<!-- saved from url=(0073)https://rozy.ninja/overlay.html?room=1433450e-6f7c-4c1c-b592-0a22f8916f36 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta content="utf-8" http-equiv="encoding">
+<meta name="copyright" content="© 2020 Steve Seguin">
+<link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+<title>OBS Overlay Window</title>
+<meta name="title" content="Ninja Overlay">
+<meta name="author" content="Steve Seguin">
+<style>
+		@font-face {
+		  font-family: "Helvetica", 'Arial', sans-serif;
+		  font-weight: 700;
+		  font-size:15px;
+		}
+	
+		body {
+			margin:0;
+			padding:0 20px;
+			height:100%;
+			border: 0;
+			display: flex;
+			flex-direction: column-reverse;
+			position:absolute;
+			bottom:0;
+			overflow:hidden;
+		}
+	
+		.output {
+			margin:0;
+			background-color: #0000;
+			width:100%;
+			height:100%;
+			color: black;
+		}
+		
+		#vote_title{
+			padding-left: 40px;
+		}
+		
+		a {
+			text-transform: none;
+		}
+
+		.graph {
+			font-family: "Helvetica", 'Arial', sans-serif;
+			font-weight: 700;
+			font-size:24px;
+			padding: 20px;
+			margin: 40px;
+			border: 2px solid #AAA;
+			border-radius: 30px;
+			background-color: #FCD0D0;
+		
+		}
+		.barcontainer{
+			height: 50px;
+			width: 600px;
+			border: 2px solid #AAA;
+			border-radius: 50px;
+			margin: 10px;
+			background-color: #027B9E;
+		}
+		
+		.bar {
+			height: 54px;
+			margin-top: 12px;
+			transition: width 2s;
+			position: relative;
+			bottom: 14px;
+			border-radius: 50px;
+			background: #DC0875;
+			right: 1px;
+		}
+		
+		.bartitle{
+			
+			position: absolute;
+			left: 100px;
+			z-index:2;
+			margin: 12px;
+		}
+
+		
+		@keyframes {
+		  0% { width: 0px; }
+		  100% { width: 100%; } 
+		}
+
+		
+		
+		#vote_output{
+			display:none;
+		}
+		
+		#prod_output{
+			bottom: 20px;
+			display: inline-block;
+			position: absolute;
+			width: 1200px;
+			height: 200px;
+		}
+		
+		#product_title {
+			max-width: 1000px;
+			overflow-wrap: anywhere;
+			text-align: center;
+			color: #FFF;
+			background-color: #CB96B0;
+			font-family: "Helvetica", 'Arial', sans-serif;
+			font-weight: 700;
+			font-size: 24px;
+			border-radius: 30px;
+			padding: 20px 40px;
+			/* bottom: 40px; */
+			display: inline-block;
+			padding-left: 80px;
+			left: -80px;
+			position: relative;
+			z-index: -4;
+		}
+		#chat_span{
+			font-size:23px;
+			display: none;
+		}
+		#chat_output {
+		font-size:23px;
+		    position: fixed;
+			max-width: 1000px;
+			overflow-wrap: anywhere;
+			text-align: center;
+			color: #707070;
+			background-color: #f9f9f9;
+			font-family: "Helvetica", 'Arial', sans-serif;
+			font-weight: 700;
+			font-size: 36px;
+			border-radius: 45px;
+			padding: 30px 60px;
+			bottom: 60px;
+			display: block;
+		}
+		#chat_output:before {
+		  font-size:23px;
+		  content: "";
+		  width: 0px;
+		  height: 0px;
+		  position: absolute;
+		  border-left: 30px solid #f9f9f9;
+		  border-right: 30px solid transparent;
+		  border-top: 30px solid #f9f9f9;
+		  border-bottom: 30px solid transparent;
+		  left: 9px;
+		  bottom: -45px;
+		  transform: rotate(14deg);
+		  display: block;
+		}
+		
+		
+	</style>
+</head>
+<body>
+<div id="prod_output" class="output"></div>
+<span id="chat_span"><div id="chat_output"></div></span>
+<div id="vote_output" class="output" style="display: block;">
+<div id="vote_title" class="graph">how are you? </div>
+<div class="graph">
+<div class="barcontainer"><div id="title1" class="bartitle">good</div><div class="bar" id="bar1" style="width: 0px; display: block;"></div></div>
+<div class="barcontainer"><div id="title2" class="bartitle">bad</div><div class="bar" id="bar2" style="width: 0px; display: block;"></div></div>
+<div class="barcontainer" style="display: none;"><div id="title3" class="bartitle"></div><div class="bar" id="bar3" style="display: none;"></div></div>
+<div class="barcontainer" style="display: none;"><div id="title4" class="bartitle"></div><div class="bar" id="bar4" style="display: none;"></div></div>
+<div class="barcontainer" style="display: none;"><div id="title5" class="bartitle"></div><div class="bar" id="bar5" style="display: none;"></div></div>
+<div class="barcontainer" style="display: none;"><div id="title6" class="bartitle"></div><div class="bar" id="bar6" style="display: none;"></div></div>
+<div class="barcontainer" style="display: none;"><div id="title7" class="bartitle"></div><div class="bar" id="bar7" style="display: none;"></div></div>
+<div class="barcontainer" style="display: none;"><div id="title8" class="bartitle"></div><div class="bar" id="bar8" style="display: none;"></div></div>
+</div>
+</div>
+<script>
+	<!-- this code is by steve seguin; based on the available at caption.ninja on github. all rights reserved. -->
+	(function (w) {
+		w.URLSearchParams = w.URLSearchParams || function (searchString) {
+			var self = this;
+			self.searchString = searchString;
+			self.get = function (name) {
+				var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(self.searchString);
+				if (results == null) {
+					return null;
+				}
+				else {
+					return decodeURI(results[1]) || 0;
+				}
+			};
+		};
+
+	})(window);
+	var urlParams = new URLSearchParams(window.location.search);
+	
+	
+	var roomID = "test"; // in practice, the room should be the Rozy channel's ID.
+	
+	if (urlParams.has("room")){
+		roomID = urlParams.get("room");
+	} else if (urlParams.has("ROOM")){
+		roomID = urlParams.get("ROOM");
+	} 
+	
+	var clearScreenTimer = null;
+	
+	var voteUpdateInterval = null;
+	
+	var accessToken = null;
+	
+	var socket = new WebSocket("wss://api.action.wtf:666");
+		
+	socket.onclose = function (){
+		setTimeout(function(){window.location.reload(true);},100);
+	};
+	
+	socket.onopen = function (){
+		socket.send(JSON.stringify({"join":roomID}));
+	}
+
+	socket.addEventListener('message', function (event) {
+		if (event.data){
+			
+			var data = JSON.parse(event.data);
+			
+			if (data.contents && ("participantName" in data.contents)){
+				if ( data.contents.participantName===false){
+					document.getElementById("chat_output").innerHTML="";
+					document.getElementById("chat_span").style.display="none";
+				} else {
+					document.getElementById("chat_output").innerHTML = data.contents.participantName + ": "+data.contents.message;
+					document.getElementById("prod_output").style.display = "none";
+					document.getElementById("chat_span").style.display="block";
+				}
+				//clearScreenTimer = setTimeout(function(){
+				//	document.getElementById("chat_output").innerHTML="";
+				//	document.getElementById("chat_span").style.display="none";
+				//},20000);  
+			} 
+			else if (data.contents && data.contents.products && data.contents.products.length){
+				document.getElementById("prod_output").innerHTML = "<img src='"+data.contents.products[0].images[0].src+"' style='margin:20px; max-width:320px;max-height:200px;vertical-align: middle;'/><div id='product_title'>"+data.contents.title+"</div>";
+				document.getElementById("chat_span").style.display="none";
+				document.getElementById("prod_output").style.display = "block";
+			}
+			else if (data.contents && ("products" in data.contents) && (!data.contents.products)){
+				document.getElementById("prod_output").innerHTML = "";
+			}
+			else if (data.contents && data.contents.title){
+				document.getElementById("prod_output").innerHTML = data.contents.title;
+			}
+			else if (data.contents && ("vote" in data.contents)){
+				if (data.contents.vote==true){
+					accessToken = data.contents.token;
+					
+					//document.getElementById("vote_output").innerHTML="";
+					document.getElementById("vote_output").style.display = "none";
+					clearInterval(voteUpdateInterval);
+					checkVote();
+					voteUpdateInterval = setInterval(function(){
+						checkVote();
+					}, 2000);
+				} else {
+					clearInterval(voteUpdateInterval);
+					document.getElementById("vote_output").style.display = "none";
+					//document.getElementById("vote_output").innerHTML="";
+				}
+			}
+		}
+	});
+	
+	socket.onclose = function (){
+		setTimeout(function(){window.location.reload(true);},100);
+	};
+	
+	function checkVote(){
+	 var data = {"operationName":"GetActiveQuestion","variables":{"channelId":roomID},"query":"query GetActiveQuestion($channelId: String!) {\n  voting_activeQuestion(channelId: $channelId) {\n    id\n    text\n    answers {\n      id\n      text\n      votes\n      __typename\n    }\n    __typename\n  }\n}\n"};
+	  var xhttp = new XMLHttpRequest();
+	  xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			data = JSON.parse(this.responseText);
+			console.warn(data);
+			
+			if (data.data && data.data.voting_activeQuestion && data.data.voting_activeQuestion.text){
+				document.getElementById("vote_title").innerHTML = data.data.voting_activeQuestion.text;
+				document.getElementById("vote_output").style.display = "block";
+			} else {
+				document.getElementById("vote_output").style.display = "none";
+			}
+			var totalVotes = 0;
+			if (data.data && data.data.voting_activeQuestion && data.data.voting_activeQuestion.answers){
+				for (var i=0;i<data.data.voting_activeQuestion.answers.length;i++){
+					try {
+						totalVotes+=data.data.voting_activeQuestion.answers[i].votes;
+					}catch(e){
+						console.warn(e,i);
+						continue;
+					}
+				}
+			}
+			
+			if (data.data && data.data.voting_activeQuestion && data.data.voting_activeQuestion.answers){
+				for (var i=0;i<data.data.voting_activeQuestion.answers.length;i++){
+					try {
+						document.getElementById("title"+(i+1)).innerHTML = data.data.voting_activeQuestion.answers[i].text;
+						document.getElementById("bar"+(i+1)).style.width = 600*parseInt(data.data.voting_activeQuestion.answers[i].votes)/totalVotes || 0;
+						document.getElementById("bar"+(i+1)).style.display = "block";
+						data.data.voting_activeQuestion.answers[i].votes
+					} catch(e){
+						console.warn(e,i);
+						continue;
+					}
+				}
+				for (i;i<8;i++){
+					document.getElementById("bar"+(i+1)).innerHTML += "";
+					document.getElementById("bar"+(i+1)).parentNode.style.display = "none";
+					document.getElementById("bar"+(i+1)).style.display = "none";
+				}
+			}
+			// {"data":{"voting_activeQuestion":{"id":"c68c3939-747d-47ff-ad41-3f7f3add82da","text":"WhateverQuestionHere","answers":[{"id":"80273143-62d0-47be-ad71-af36d212daa1","text":"Answer1","votes":0,"__typename":"Voting_Answer"},{"id":"11b1be27-7542-4a1a-9789-f4dd05883dcd","text":"Answer2","votes":0,"__typename":"Voting_Answer"}],"__typename":"Voting_Question"}},"extensions":{"tracing":{"version":1,"startTime":"2021-02-03T03:13:55.831Z","endTime":"2021-02-03T03:13:55.837Z","duration":5723479,"execution":{"resolvers":[{"path":["voting_activeQuestion"],"parentType":"Query","fieldName":"voting_activeQuestion","returnType":"Voting_Question","startOffset":827313,"duration":4803182},{"path":["voting_activeQuestion","id"],"parentType":"Voting_Question","fieldName":"id","returnType":"ID","startOffset":5645905,"duration":5297},{"path":["voting_activeQuestion","text"],"parentType":"Voting_Question","fieldName":"text","returnType":"String!","startOffset":5652531,"duration":1569},{"path":["voting_activeQuestion","answers"],"parentType":"Voting_Question","fieldName":"answers","returnType":"[Voting_Answer!]!","startOffset":5657740,"duration":8834},{"path":["voting_activeQuestion","answers",0,"id"],"parentType":"Voting_Answer","fieldName":"id","returnType":"ID","startOffset":5674328,"duration":1243},{"path":["voting_activeQuestion","answers",0,"text"],"parentType":"Voting_Answer","fieldName":"text","returnType":"String!","startOffset":5680507,"duration":1106},{"path":["voting_activeQuestion","answers",0,"votes"],"parentType":"Voting_Answer","fieldName":"votes","returnType":"Int!","startOffset":5682626,"duration":2273},{"path":["voting_activeQuestion","answers",1,"id"],"parentType":"Voting_Answer","fieldName":"id","returnType":"ID","startOffset":5692191,"duration":794},{"path":["voting_activeQuestion","answers",1,"text"],"parentType":"Voting_Answer","fieldName":"text","returnType":"String!","startOffset":5693655,"duration":580},{"path":["voting_activeQuestion","answers",1,"votes"],"parentType":"Voting_Answer","fieldName":"votes","returnType":"Int!","startOffset":5698014,"duration":1039}]}}}}
+		}
+	  };
+	  xhttp.open("POST", "https://reports.obs.ninja/plugin", true);
+	  xhttp.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+	  xhttp.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+	  xhttp.send(JSON.stringify(data));
+	}
+	
+	</script>
+
+
+</body></html>
