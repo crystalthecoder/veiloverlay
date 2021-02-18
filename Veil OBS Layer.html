@@ -1,5 +1,5 @@
 
-<!-- saved from url=(0073)https://rozy.ninja/overlay.html?room=1433450e-6f7c-4c1c-b592-0a22f8916f36 -->
+<!-- saved from url=(0031)https://rozy.ninja/overlay.html -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -38,6 +38,7 @@
 		
 		#vote_title{
 			padding-left: 40px;
+			color: #FFF;
 		}
 		
 		a {
@@ -52,7 +53,7 @@
 			margin: 40px;
 			border: 2px solid #AAA;
 			border-radius: 30px;
-			background-color: #FCD0D0;
+			background-color: #027B9E;
 		
 		}
 		.barcontainer{
@@ -61,7 +62,7 @@
 			border: 2px solid #AAA;
 			border-radius: 50px;
 			margin: 10px;
-			background-color: #027B9E;
+			background-color: #FFF;
 		}
 		
 		.bar {
@@ -71,10 +72,10 @@
 			position: relative;
 			bottom: 14px;
 			border-radius: 50px;
-			background: #DC0875;
+			background: #8FD3D7;
 			right: 1px;
 		}
-		
+
 		.bartitle{
 			
 			position: absolute;
@@ -163,17 +164,18 @@
 <body>
 <div id="prod_output" class="output"></div>
 <span id="chat_span"><div id="chat_output"></div></span>
-<div id="vote_output" class="output" style="display: block;">
-<div id="vote_title" class="graph">how are you? </div>
+<div id="vote_output" class="output">
+<div id="vote_title" class="graph">
+</div>
 <div class="graph">
-<div class="barcontainer"><div id="title1" class="bartitle">good</div><div class="bar" id="bar1" style="width: 0px; display: block;"></div></div>
-<div class="barcontainer"><div id="title2" class="bartitle">bad</div><div class="bar" id="bar2" style="width: 0px; display: block;"></div></div>
-<div class="barcontainer" style="display: none;"><div id="title3" class="bartitle"></div><div class="bar" id="bar3" style="display: none;"></div></div>
-<div class="barcontainer" style="display: none;"><div id="title4" class="bartitle"></div><div class="bar" id="bar4" style="display: none;"></div></div>
-<div class="barcontainer" style="display: none;"><div id="title5" class="bartitle"></div><div class="bar" id="bar5" style="display: none;"></div></div>
-<div class="barcontainer" style="display: none;"><div id="title6" class="bartitle"></div><div class="bar" id="bar6" style="display: none;"></div></div>
-<div class="barcontainer" style="display: none;"><div id="title7" class="bartitle"></div><div class="bar" id="bar7" style="display: none;"></div></div>
-<div class="barcontainer" style="display: none;"><div id="title8" class="bartitle"></div><div class="bar" id="bar8" style="display: none;"></div></div>
+<div class="barcontainer"><div id="title1" class="bartitle"></div><div class="bar" id="bar1"></div></div>
+<div class="barcontainer"><div id="title2" class="bartitle"></div><div class="bar" id="bar2"></div></div>
+<div class="barcontainer"><div id="title3" class="bartitle"></div><div class="bar" id="bar3"></div></div>
+<div class="barcontainer"><div id="title4" class="bartitle"></div><div class="bar" id="bar4"></div></div>
+<div class="barcontainer"><div id="title5" class="bartitle"></div><div class="bar" id="bar5"></div></div>
+<div class="barcontainer"><div id="title6" class="bartitle"></div><div class="bar" id="bar6"></div></div>
+<div class="barcontainer"><div id="title7" class="bartitle"></div><div class="bar" id="bar7"></div></div>
+<div class="barcontainer"><div id="title8" class="bartitle"></div><div class="bar" id="bar8"></div></div>
 </div>
 </div>
 <script>
@@ -307,13 +309,14 @@
 						document.getElementById("title"+(i+1)).innerHTML = data.data.voting_activeQuestion.answers[i].text;
 						document.getElementById("bar"+(i+1)).style.width = 600*parseInt(data.data.voting_activeQuestion.answers[i].votes)/totalVotes || 0;
 						document.getElementById("bar"+(i+1)).style.display = "block";
+						document.getElementById("bar"+(i+1)).parentNode.style.display = "block";
 						data.data.voting_activeQuestion.answers[i].votes
 					} catch(e){
 						console.warn(e,i);
 						continue;
 					}
 				}
-				for (i;i<8;i++){
+				for (var i=data.data.voting_activeQuestion.answers.length;i<8;i++){
 					document.getElementById("bar"+(i+1)).innerHTML += "";
 					document.getElementById("bar"+(i+1)).parentNode.style.display = "none";
 					document.getElementById("bar"+(i+1)).style.display = "none";
@@ -322,7 +325,7 @@
 			// {"data":{"voting_activeQuestion":{"id":"c68c3939-747d-47ff-ad41-3f7f3add82da","text":"WhateverQuestionHere","answers":[{"id":"80273143-62d0-47be-ad71-af36d212daa1","text":"Answer1","votes":0,"__typename":"Voting_Answer"},{"id":"11b1be27-7542-4a1a-9789-f4dd05883dcd","text":"Answer2","votes":0,"__typename":"Voting_Answer"}],"__typename":"Voting_Question"}},"extensions":{"tracing":{"version":1,"startTime":"2021-02-03T03:13:55.831Z","endTime":"2021-02-03T03:13:55.837Z","duration":5723479,"execution":{"resolvers":[{"path":["voting_activeQuestion"],"parentType":"Query","fieldName":"voting_activeQuestion","returnType":"Voting_Question","startOffset":827313,"duration":4803182},{"path":["voting_activeQuestion","id"],"parentType":"Voting_Question","fieldName":"id","returnType":"ID","startOffset":5645905,"duration":5297},{"path":["voting_activeQuestion","text"],"parentType":"Voting_Question","fieldName":"text","returnType":"String!","startOffset":5652531,"duration":1569},{"path":["voting_activeQuestion","answers"],"parentType":"Voting_Question","fieldName":"answers","returnType":"[Voting_Answer!]!","startOffset":5657740,"duration":8834},{"path":["voting_activeQuestion","answers",0,"id"],"parentType":"Voting_Answer","fieldName":"id","returnType":"ID","startOffset":5674328,"duration":1243},{"path":["voting_activeQuestion","answers",0,"text"],"parentType":"Voting_Answer","fieldName":"text","returnType":"String!","startOffset":5680507,"duration":1106},{"path":["voting_activeQuestion","answers",0,"votes"],"parentType":"Voting_Answer","fieldName":"votes","returnType":"Int!","startOffset":5682626,"duration":2273},{"path":["voting_activeQuestion","answers",1,"id"],"parentType":"Voting_Answer","fieldName":"id","returnType":"ID","startOffset":5692191,"duration":794},{"path":["voting_activeQuestion","answers",1,"text"],"parentType":"Voting_Answer","fieldName":"text","returnType":"String!","startOffset":5693655,"duration":580},{"path":["voting_activeQuestion","answers",1,"votes"],"parentType":"Voting_Answer","fieldName":"votes","returnType":"Int!","startOffset":5698014,"duration":1039}]}}}}
 		}
 	  };
-	  xhttp.open("POST", "https://reports.obs.ninja/plugin", true);
+	  xhttp.open("POST", "https://s10.action.wtf/plugin", true);
 	  xhttp.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
 	  xhttp.setRequestHeader('Authorization', 'Bearer ' + accessToken);
 	  xhttp.send(JSON.stringify(data));
